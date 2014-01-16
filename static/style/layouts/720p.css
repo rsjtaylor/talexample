@@ -1,0 +1,17 @@
+.button {
+     display: block;
+     position: relative;
+}
+
+.button {
+    display: block;
+    position: absolute;
+    background-color: yellow;
+    width: 200px;
+    height: 300px;
+    top: 200px;
+}
+
+.buttonFocussed {
+    background-color: darkred;
+}
