@@ -2,11 +2,12 @@ require.def("sampleapp/appui/components/simple",
     [
         "antie/widgets/component",
         "antie/widgets/button",
-        "antie/widgets/label"
+        "antie/widgets/label",
+        "antie/widgets/container"
     ],
-    function (Component, Button, Label) {
+    function (Component, Button, Label, Container) {
         'use strict';
-        var start = 80, end = 1000, duration = 2000, states = [
+        var start = 80, end = 800, duration = 2000, states = [
             'start',
             'out',
             'end',
@@ -19,17 +20,26 @@ require.def("sampleapp/appui/components/simple",
         return Component.extend({
 
             init: function () {
-                var self, label;
+                var self, label, i, button, numButtons;
+                numButtons = 200;
                 this._device = this.getCurrentApplication().getDevice();
                 self = this;
                 // It is important to call the constructor of the superclass
                 this._super("simplecomponent");
                 
                 // Hello World
-                label = new Label("Hello World");
-                this._button = new Button();
-                this._button.appendChildWidget(label);
-                
+
+                this.container = new Container('outerDiv');
+
+                this.buttons = [];
+                for (i = 0; i !== numButtons; i += 1) {
+                    label = new Label(i.toString());
+                    button = new Button();
+                    button.appendChildWidget(label);
+                    this.container.appendChildWidget(button);
+                    this.buttons.push(button);
+                }
+
                 this.addEventListener("beforerender", function (ev) {
                     self._onBeforeRender(ev);
                 });
@@ -41,12 +51,10 @@ require.def("sampleapp/appui/components/simple",
                     }
                 }
 
-
-
                 function tweenOut() {
                     nextState();
                     self._device.moveElementTo({
-                        el: self._button.outputElement,
+                        el: self.container.outputElement,
                         from: {
                             left: start
                         },
@@ -61,7 +69,7 @@ require.def("sampleapp/appui/components/simple",
                 function tweenBack() {
                     nextState();
                     self._device.moveElementTo({
-                        el: self._button.outputElement,
+                        el: self.container.outputElement,
                         from: {
                             left: end
                         },
@@ -90,20 +98,25 @@ require.def("sampleapp/appui/components/simple",
                     self.getCurrentApplication().ready();
                     self.removeEventListener('aftershow', appReady);
                     self._device.moveElementTo({
-                        el: self._button.outputElement,
+                        el: self.container.outputElement,
                         to: {
                             left: start
                         },
                         skipAnim: true
                     });
-                    self._button.addEventListener('select', tween);
+
+                    for (i = 0; i !== self.buttons.length; i += 1) {
+                        self.buttons[i].addEventListener('select', tween);
+                    }
+
+
                 });
             },
 
             // Appending widgets on beforerender ensures they're still displayed
             // if the component is hidden and subsequently reinstated.
             _onBeforeRender: function () {
-                this.appendChildWidget(this._button);
+                this.appendChildWidget(this.container);
             }
         });
     }

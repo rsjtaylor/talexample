@@ -4,14 +4,27 @@
 }
 
 .button {
+    display: inline-block;
+    background-color: yellow;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    width: 20px;
+    height: 30px;
+    color: black;
+}
+
+#outerDiv {
     display: block;
     position: absolute;
-    background-color: yellow;
-    width: 200px;
+    background-color: blue;
+    width: 700px;
     height: 300px;
     top: 200px;
+    overflow: hidden;
 }
 
 .buttonFocussed {
     background-color: darkred;
+    color: white;
 }
