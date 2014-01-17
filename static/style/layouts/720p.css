@@ -28,3 +28,7 @@
     background-color: darkred;
     color: white;
 }
+
+.nest {
+    display: inline-block;
+}

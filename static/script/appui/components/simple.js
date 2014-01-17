@@ -20,8 +20,9 @@ require.def("sampleapp/appui/components/simple",
         return Component.extend({
 
             init: function () {
-                var self, label, i, button, numButtons;
+                var self, label, i, j, inner, numButtons, nest, outer;
                 numButtons = window.DOM_COUNT;
+                nest = window.NEST_COUNT;
                 this._device = this.getCurrentApplication().getDevice();
                 self = this;
                 // It is important to call the constructor of the superclass
@@ -34,10 +35,17 @@ require.def("sampleapp/appui/components/simple",
                 this.buttons = [];
                 for (i = 0; i !== numButtons; i += 1) {
                     label = new Label(i.toString());
-                    button = new Button();
-                    button.appendChildWidget(label);
-                    this.container.appendChildWidget(button);
-                    this.buttons.push(button);
+                    inner = new Button();
+                    inner.appendChildWidget(label);
+                    for (j = 0; j !== window.NEST_COUNT; j += 1) {
+                        outer = new Container('button_' + i + '_nest_' + j);
+                        outer.appendChildWidget(inner);
+                        outer.addClass('nest');
+                        inner = outer;
+                    }
+
+                    this.container.appendChildWidget(inner);
+                    this.buttons.push(inner);
                 }
 
                 this.addEventListener("beforerender", function (ev) {

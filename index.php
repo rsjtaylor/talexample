@@ -154,10 +154,12 @@ echo $antie->getRootHtmlTag($device_configuration_decoded);
                     function onReady() {
                         var staticLoadingScreen = document.getElementById('static-loading-screen');
                         staticLoadingScreen.parentNode.removeChild(staticLoadingScreen);
-                    };
+                    }
                     <?php
                     $count = isset($_GET['count'])? $_GET['count'] : '100'; 
                     echo 'window.DOM_COUNT = ' . $count . ';';
+                    $nest = isset($_GET['nest'])? $_GET['nest'] : '0';
+                    echo 'window.NEST_COUNT = ' . $nest . ';';
                     ?>
                     
                     new SampleApp(
