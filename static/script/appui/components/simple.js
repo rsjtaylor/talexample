@@ -21,7 +21,7 @@ require.def("sampleapp/appui/components/simple",
 
             init: function () {
                 var self, label, i, button, numButtons;
-                numButtons = 200;
+                numButtons = window.DOM_COUNT;
                 this._device = this.getCurrentApplication().getDevice();
                 self = this;
                 // It is important to call the constructor of the superclass
