@@ -110,7 +110,7 @@ echo $antie->getRootHtmlTag($device_configuration_decoded);
 
     <!-- Load require.js -->
     <script type="text/javascript" src="antie/static/script/lib/require.js"></script>
-
+    <script type="text/javascript" src="../talperformancemonitor.js"></script>
     <!-- Load application base style sheet -->
     <link rel="stylesheet" href="static/style/base.css"/>
 
@@ -155,7 +155,11 @@ echo $antie->getRootHtmlTag($device_configuration_decoded);
                         var staticLoadingScreen = document.getElementById('static-loading-screen');
                         staticLoadingScreen.parentNode.removeChild(staticLoadingScreen);
                     };
-
+                    <?php
+                    $count = isset($_GET['count'])? $_GET['count'] : '100'; 
+                    echo 'window.DOM_COUNT = ' . $count . ';';
+                    ?>
+                    
                     new SampleApp(
                             document.getElementById('app'),
                             'static/style/',
